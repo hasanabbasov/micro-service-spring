@@ -3,6 +3,8 @@ package microservice.customer;
 import lombok.AllArgsConstructor;
 import microservice.client.fraud.FraudCheckResponse;
 import microservice.client.fraud.FraudClient;
+import microservice.client.fraud.NotificationClient;
+import microservice.client.fraud.NotificationResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,6 +14,8 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final FraudClient fraudClient;
+
+    private final NotificationClient notificationClient;
 
 
     public void registerCustomer(CustomerRegistrationRequest request){
@@ -30,6 +34,9 @@ public class CustomerService {
             throw new IllegalStateException("Illegal");
         }
 
-
+        NotificationResponse notificationResponse = notificationClient.sendNotification(customer.getId());
+        if (!notificationResponse.isSend()){
+            throw new IllegalStateException("Error, Notification not sent!!");
+        }
     }
 }
