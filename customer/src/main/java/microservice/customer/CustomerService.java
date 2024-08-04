@@ -1,6 +1,8 @@
 package microservice.customer;
 
 import lombok.AllArgsConstructor;
+import microservice.client.fraud.FraudCheckResponse;
+import microservice.client.fraud.FraudClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
+    private final FraudClient fraudClient;
 
 
     public void registerCustomer(CustomerRegistrationRequest request){
@@ -21,11 +23,8 @@ public class CustomerService {
                 .build();
 
         customerRepository.saveAndFlush(customer);
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://localhost:8081/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
-        );
+
+        FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
 
         if (fraudCheckResponse.isFraudster()){
             throw new IllegalStateException("Illegal");

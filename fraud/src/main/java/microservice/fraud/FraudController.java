@@ -2,13 +2,14 @@ package microservice.fraud;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import microservice.client.fraud.FraudCheckResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/fraud-check")
 @AllArgsConstructor
 @Slf4j
-public class FraudControler {
+public class FraudController {
 
     private final FraudChechService fraudChechService;
 
