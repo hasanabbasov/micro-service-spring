@@ -2,6 +2,7 @@
 
 This project is developed to learn and implement the Spring Microservices architecture. Throughout the project, various modern technologies and tools are used to detail how to create, communicate, and manage microservices. The main technologies and steps used are as follows:
 
+
 	1.	Maven:
 	•	The project is structured and managed using Maven.
 	•	Dependency management is provided with the Maven Parent Module.
