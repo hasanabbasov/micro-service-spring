@@ -1,4 +1,4 @@
-package mocroservice;
+package microservice.amqp;
 
 
 import lombok.AllArgsConstructor;
